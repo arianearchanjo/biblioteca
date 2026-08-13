@@ -6,7 +6,7 @@
 |---|---|
 | **Grupo** | 1 |
 | **Domínio** | Biblioteca |
-| **Integrantes** | [NOMES] |
+| **Integrantes** | Ariane, Caio, Eduardo, Lucas Gabriel, Guilherme, Ryan |
 | **Nome do arquivo ZIP** | grupo_1_biblioteca.zip |
 
 **Entrega no AVA:** o grupo deverá enviar UM único arquivo .zip contendo o programa Java, a modelagem, evidência de execução e este documento preenchido.
