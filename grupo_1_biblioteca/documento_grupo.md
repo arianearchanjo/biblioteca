@@ -58,15 +58,14 @@ grupo_1_biblioteca/
 
 ## 4. Uso da IA pelo grupo
 
-**Como usamos a IA:** usamos a IA como apoio para validar a modelagem, revisar o código e gerar artefatos (diagrama de classes e evidência de execução). Antes de aceitar qualquer sugestão, o grupo conferiu se fazia sentido para o domínio e se estava dentro do que já estudamos na disciplina. Nenhuma decisão foi aplicada sem o grupo entender o motivo.
+**Como usamos a IA:** usamos a IA como apoio para validar a modelagem, revisar o código e gerar artefatos (diagrama de classes e evidência de execução). Antes de aceitar qualquer sugestão, o grupo conferiu se fazia sentido para o domínio. Nenhuma decisão foi aplicada sem o grupo entender o motivo.
 
 | Sugestão/pergunta feita à IA | Aceitamos? | Justificativa do grupo |
 |---|---|---|
 | Perguntamos se as três classes (Livro, Usuario e Emprestimo) eram suficientes para o domínio ou se faltava alguma classe importante | Sim | Aceitamos porque as três classes cobrem bem o domínio sem criar classes desnecessárias, mantendo o escopo mínimo pedido. |
-| Sugeriu armazenar as datas no formato aaaa-mm-dd para compará-las como texto simples (sem biblioteca de datas) | Sim | Aceitamos porque evita o uso de bibliotecas de data, mantendo a comparação simples e legível para o nosso nível. |
 | Sugeriu que emprestar()/devolver() retornem boolean para indicar se a operação foi possível | Sim | Aceitamos porque retornar true/false deixa o código fácil de ler e mostra o resultado real da ação do objeto. |
 | Sugeriu guardar o limite de empréstimos como atributo do próprio Usuario, pois cada usuário pode ter um limite diferente | Sim | Aceitamos porque faz sentido o limite ser de cada usuário (ex.: aluno e professor podem ter limites diferentes). |
-| Pedimos à IA para revisar o código e simplificar o que estivesse avançado demais para o que já estudamos (sem herança, interfaces ou streams) | Sim | Aceitamos porque a revisão deixou o código mais simples e coerente com a disciplina, sem "sofisticação" desnecessária. |
+| Pedimos à IA para revisar o código e deixá-lo mais simples e legível | Sim | Aceitamos porque a revisão melhorou a clareza do código, sem adicionar complexidade desnecessária. |
 
 ---
 
