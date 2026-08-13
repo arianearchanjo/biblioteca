@@ -60,9 +60,9 @@ grupo_1_biblioteca/
 
 | Sugestão/pergunta feita à IA | Aceitamos? | Justificativa do grupo |
 |---|---|---|
-| Sugeriu armazenar as datas no formato aaaa-mm-dd para compará-las como texto simples (sem biblioteca de datas) | [Sim / Não] | [PREENCHER] |
-| Sugeriu que emprestar()/devolver() retornem boolean para indicar se a operação foi possível | [Sim / Não] | [PREENCHER] |
-| Sugeriu guardar o limite de empréstimos como atributo do próprio Usuario, pois cada usuário pode ter um limite diferente | [Sim / Não] | [PREENCHER] |
+| Sugeriu armazenar as datas no formato aaaa-mm-dd para compará-las como texto simples (sem biblioteca de datas) | Sim | Aceitamos porque evita o uso de bibliotecas de data e mantém a comparação simples e legível. |
+| Sugeriu que emprestar()/devolver() retornem boolean para indicar se a operação foi possível | Sim | Aceitamos porque retornar true/false torna o código fácil de ler e mostra se o estado do objeto mudou. |
+| Sugeriu guardar o limite de empréstimos como atributo do próprio Usuario, pois cada usuário pode ter um limite diferente | Sim | Aceitamos porque faz sentido o limite ser de cada usuário (ex.: aluno e professor podem ter limites diferentes). |
 
 ---
 
@@ -70,11 +70,11 @@ grupo_1_biblioteca/
 
 **1. Qual alteração ou desafio o professor solicitou?**
 
-[PREENCHER]
+N/A — nenhuma alteração solicitada até o momento (primeira entrega).
 
 **2. O que o grupo precisou alterar na modelagem ou no código?**
 
-[PREENCHER]
+N/A — primeira entrega, será preenchido em sala quando o professor solicitar. 
 
 ---
 
@@ -84,7 +84,7 @@ grupo_1_biblioteca/
 - [x] A pasta src contém todos os arquivos .java necessários.
 - [x] A pasta modelagem contém a modelagem/UML da solução.
 - [x] A pasta execucao contém uma evidência de que o programa foi executado.
-- [x] O documento_grupo.docx está preenchido.
+- [x] O documento_grupo.md está preenchido.
 - [x] O projeto abre/compila com os arquivos entregues.
 - [ ] O grupo está preparado para explicar a solução e cada integrante fará sua entrega individual separadamente.
 
