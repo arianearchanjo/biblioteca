@@ -1,0 +1,39 @@
+﻿==================================================
+   RELATORIO DA BIBLIOTECA - GRUPO 1
+==================================================
+
+-- ESTADO INICIAL DOS OBJETOS --
+Livro 1: Dom Casmurro | disponivel? true
+Livro 2: O Pequeno Principe | disponivel? true
+Ana   - emprestimos ativos: 0 de 3
+Bruno - emprestimos ativos: 0 de 1
+
+-- APOS OS EMPRESTIMOS --
+Emprestimo 1: Dom Casmurro -> Ana Souza (prevista: 2026-08-20)
+Emprestimo 2: O Pequeno Principe -> Bruno Lima (prevista: 2026-08-07)
+
+Livro 1 (Dom Casmurro) disponivel? false
+Livro 2 (O Pequeno Principe) disponivel? false
+
+Emprestimo 1 esta atrasado? false
+Emprestimo 2 esta atrasado? true
+
+Ana pode emprestar outro livro? true
+Bruno pode emprestar outro livro? false
+Bruno conseguiu o livro1? false (livro nao disponivel e limite atingido)
+
+-- APOS A DEVOLUCAO DO EMPRESTIMO 1 --
+Livro 1 (Dom Casmurro) disponivel? true
+Livro 2 (O Pequeno Principe) disponivel? false
+Ana   - emprestimos ativos: 0
+Bruno - emprestimos ativos: 1 (ainda com o livro2 em atraso)
+
+==================================================
+   RESUMO FINAL
+==================================================
+Livro 1: Dom Casmurro -> disponivel: true
+Livro 2: O Pequeno Principe -> disponivel: false
+Ana:   0 emprestimo(s) ativo(s)
+Bruno: 1 emprestimo(s) ativo(s)
+Emprestimo 1 (Ana): devolvido
+Emprestimo 2 (Bruno): ativo
