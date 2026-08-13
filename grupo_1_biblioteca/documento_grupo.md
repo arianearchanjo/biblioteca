@@ -65,7 +65,7 @@ grupo_1_biblioteca/
 | Perguntamos se as três classes (Livro, Usuario e Emprestimo) eram suficientes para o domínio ou se faltava alguma classe importante | Sim | Aceitamos porque as três classes cobrem bem o domínio sem criar classes desnecessárias, mantendo o escopo mínimo pedido. |
 | Sugeriu que emprestar()/devolver() retornem boolean para indicar se a operação foi possível | Sim | Aceitamos porque retornar true/false deixa o código fácil de ler e mostra o resultado real da ação do objeto. |
 | Sugeriu guardar o limite de empréstimos como atributo do próprio Usuario, pois cada usuário pode ter um limite diferente | Sim | Aceitamos porque faz sentido o limite ser de cada usuário (ex.: aluno e professor podem ter limites diferentes). |
-| Pedimos à IA para revisar o código e deixá-lo mais simples e legível | Sim | Aceitamos porque a revisão melhorou a clareza do código, sem adicionar complexidade desnecessária. |
+| Pedimos à IA para revisar o código e garantir que não havia erros grandes ou erros de lógica | Sim | Aceitamos porque a revisão nos ajudou a encontrar e corrigir falhas antes de entregar o trabalho. |
 
 ---
 
