@@ -73,11 +73,11 @@ grupo_1_biblioteca/
 
 **1. Qual alteração ou desafio o professor solicitou?**
 
-N/A — nenhuma alteração solicitada até o momento (primeira entrega).
+Nossa apresentação foi feita com qualidade. O professor solicitou uma alteração para a próxima entrega: criar **uma classe de autores com vários autores** (um livro pode ter mais de um autor). Vamos implementar essa alteração na próxima entrega.
 
 **2. O que o grupo precisou alterar na modelagem ou no código?**
 
-N/A — primeira entrega, será preenchido em sala quando o professor solicitar. 
+Ainda não alteramos a modelagem nem o código, pois a alteração ficou para a próxima entrega. Para isso, vamos precisar criar a classe Autor, relacioná-la ao Livro (permitindo vários autores por livro) e ajustar a modelagem e o código de acordo.
 
 ---
 
@@ -89,6 +89,6 @@ N/A — primeira entrega, será preenchido em sala quando o professor solicitar.
 - [x] A pasta execucao contém uma evidência de que o programa foi executado.
 - [x] O documento_grupo.md está preenchido.
 - [x] O projeto abre/compila com os arquivos entregues.
-- [ ] O grupo está preparado para explicar a solução e cada integrante fará sua entrega individual separadamente.
+- [x] O grupo está preparado para explicar a solução e cada integrante fará sua entrega individual separadamente.
 
 **Importante:** a entrega do ZIP representa o produto coletivo. A compreensão de cada integrante será verificada também pela entrega individual e, quando solicitado, pela apresentação/defesa em sala.
