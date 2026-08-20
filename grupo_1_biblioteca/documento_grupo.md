@@ -1,94 +1,130 @@
 # PROGRAMAÇÃO ORIENTADA A OBJETOS
 
-## MODELO DE ENTREGA DO GRUPO — SEMANA 12/08
+## MODELO DE ENTREGA DO GRUPO — ETAPA 2 (Semanas 19/08 e 26/08)
 
 | Campo | Valor |
 |---|---|
 | **Grupo** | 1 |
 | **Domínio** | Biblioteca |
 | **Integrantes** | Ariane, Caio, Eduardo, Lucas Gabriel, Guilherme, Ryan |
-| **Nome do arquivo ZIP** | grupo_1_biblioteca.zip |
+| **Nome do arquivo ZIP** | grupo_1_biblioteca_etapa2.zip |
 
-**Entrega no AVA:** o grupo deverá enviar UM único arquivo .zip contendo o programa Java, a modelagem, evidência de execução e este documento preenchido.
+**Entrega no AVA:** o grupo deverá enviar UM único arquivo .zip contendo o programa Java, a modelagem atualizada, evidência de execução e este documento preenchido.
 
 ---
 
 ## 1. Estrutura obrigatória do arquivo ZIP
 
-**Exemplo:** grupo_1_biblioteca.zip
+**Exemplo:** grupo_1_biblioteca_etapa2.zip
 
 ```
-grupo_1_biblioteca/
+grupo_1_biblioteca_etapa2/
 ├── src/
+│   ├── Autor.java
 │   ├── Livro.java
 │   ├── Usuario.java
+│   ├── Emprestimo.java
 │   └── Main.java
 ├── modelagem/
-│   └── modelagem.png (ou .pdf)
+│   └── modelagem_etapa2.png (ou .pdf/.md)
 ├── execucao/
-│   └── execucao.png
+│   └── saida_console.txt
 └── documento_grupo.docx
 ```
-
-**Observação:** os nomes das classes são apenas exemplo. Entreguem os arquivos correspondentes ao domínio e à solução do grupo.
 
 ---
 
 ## 2. O que deve existir no programa Java
 
-- Pelo menos duas classes implementadas a partir da modelagem.
-- Atributos coerentes com a responsabilidade das classes.
-- Pelo menos um método que represente comportamento real do objeto.
-- Uma classe Main (ou equivalente) que crie pelo menos dois objetos de uma mesma classe com estados diferentes.
-- Execução no console demonstrando estado ou comportamento dos objetos.
-- Não utilizar herança, interfaces ou recursos ainda não estudados apenas para sofisticar a solução.
+- Pelo menos 3 classes de domínio (Autor, Livro, Usuario, Emprestimo = 4 classes).
+- Atributos privados com encapsulamento.
+- Construtores explícitos em todas as classes de domínio.
+- Getters necessários para consulta.
+- Pelo menos 1 método de negócio real por classe (não contar getters/setters).
+- Pelo menos 2 validações de estado no código.
+- Uma classe Main que crie pelo menos dois objetos da mesma classe com estados diferentes.
+- Execução no console demonstrando estado, comportamento e validações.
+- Não utilizar herança, interfaces ou recursos ainda não estudados.
 
 ---
 
-## 3. Resumo da modelagem do grupo
+## 3. Resumo da modelagem do grupo (Etapa 2)
 
 | Classe | Responsabilidade | Principais atributos | Principais métodos |
 |---|---|---|---|
-| Livro | Representa um livro do acervo e controla se ele está disponível ou emprestado | titulo, autor, isbn, disponivel | emprestar(), devolver() |
+| Autor | Representa o autor de um livro (nome e nacionalidade) | nome, nacionalidade | getNome(), getNacionalidade() |
+| Livro | Representa um livro do acervo, controla disponibilidade e guarda seus autores | titulo, autores (ArrayList\<Autor\>), isbn, disponivel | emprestar(), devolver(), getNomesAutores() |
 | Usuario | Representa um usuário da biblioteca e controla seus empréstimos ativos dentro de um limite pessoal | nome, matricula, qtdEmprestimosAtivos, limiteEmprestimos | podeEmprestar(), registrarEmprestimo(), registrarDevolucao() |
 | Emprestimo | Liga um livro a um usuário e controla o prazo e o status da devolução (ativo/devolvido/atrasado) | livro, usuario, dataEmprestimo, dataDevolucaoPrevista, ativo | estaAtrasado(), finalizar() |
-| Main | Demonstra a modelagem criando objetos, alterando seus estados e imprimindo um mini-relatório no console | (nenhum atributo próprio) | main() |
+| Main | Demonstra a modelagem criando objetos, executando operações válidas e inválidas, e imprimindo um relatório no console | (nenhum atributo próprio) | main() |
 
 ---
 
-## 4. Uso da IA pelo grupo
+## 4. Mudanças da Etapa 2 em relação à Etapa 1
 
-**Como usamos a IA:** usamos a IA como apoio para validar a modelagem, revisar o código e gerar artefatos (diagrama de classes e evidência de execução). Antes de aceitar qualquer sugestão, o grupo conferiu se fazia sentido para o domínio. Nenhuma decisão foi aplicada sem o grupo entender o motivo.
+| O que mudou | Por que mudou |
+|---|---|
+| Criada a classe **Autor** (nome + nacionalidade) | O professor solicitou suporte a vários autores por livro na Etapa 1 |
+| `Livro.autor` (String) virou `Livro.autores` (ArrayList\<Autor\>) | Um livro pode ter mais de um autor |
+| Adicionado `getNomesAutores()` no Livro | Método utilitário para exibir nomes dos autores no console |
+| Adicionada classe Autor no Main com 3 objetos (Machado, Exupery, Coelho) | Demonstrar a nova classe e a relação 1 para muitos com Livro |
+| Adicionadas 2 tentativas inválidas no Main (limite atingido + livro já emprestado) | Atividade 8: testar validações de estado inválido |
+| Adicionado teste de proteção por método de negócio (devolver() em livro disponível) | Atividade 8: mostrar que emprestar()/devolver() protegem melhor que um setter |
+
+---
+
+## 5. Decisões de modelagem
+
+**1. Por que a classe Autor foi criada?**
+
+Na Etapa 1, o autor era uma String dentro de Livro. O professor solicitou que um livro pudesse ter mais de um autor. Para isso, criamos a classe Autor como entidade própria, com nome e nacionalidade, e substituímos a String por um ArrayList\<Autor\> dentro de Livro. Isso permite representar a relação de vários autores por livro de forma limpa.
+
+**2. Por que os atributos continuam privados?**
+
+Todos os atributos de Autor, Livro, Usuario e Emprestimo são private. Isso protege o estado interno: ninguém de fora pode alterar diretamente um atributo (ex.: marcar um livro como disponível sem passar pelo método devolver()). Os getters permitem consulta, e os métodos de negócio (emprestar(), devolver(), registrarEmprestimo(), etc.) controlam as mudanças de estado.
+
+**3. Por que não criamos um setter para disponivel no Livro?**
+
+Em vez de setDisponivel(boolean), o Livro oferece emprestar() e devolver(). Esses métodos verificam o estado atual antes de alterar: emprestar() só funciona se o livro estiver disponível, e devolver() só funciona se estiver emprestado. Isso é mais seguro que um setter genérico, que permitiria colocar o livro em qualquer estado sem validação.
+
+---
+
+## 6. Uso da IA pelo grupo
+
+**Como usamos a IA:** o grupo primeiro discutiu e definiu a modelagem (classe Autor, substituir String por lista de autores). Depois consultamos a IA para revisar o código e validar se estava tudo correto. Cada sugestão da IA foi analisada pelo grupo antes de aceitar ou rejeitar.
 
 | Sugestão/pergunta feita à IA | Aceitamos? | Justificativa do grupo |
 |---|---|---|
-| Perguntamos se as três classes (Livro, Usuario e Emprestimo) eram suficientes para o domínio ou se faltava alguma classe importante | Sim | Aceitamos porque as três classes cobrem bem o domínio sem criar classes desnecessárias, mantendo o escopo mínimo pedido. |
-| Sugeriu que emprestar()/devolver() retornem boolean para indicar se a operação foi possível | Sim | Aceitamos porque retornar true/false deixa o código fácil de ler e mostra o resultado real da ação do objeto. |
-| Sugeriu guardar o limite de empréstimos como atributo do próprio Usuario, pois cada usuário pode ter um limite diferente | Sim | Aceitamos porque faz sentido o limite ser de cada usuário (ex.: aluno e professor podem ter limites diferentes). |
-| Pedimos à IA para revisar o código e garantir que não havia erros grandes ou erros de lógica | Sim | Aceitamos porque a revisão nos ajudou a encontrar e corrigir falhas antes de entregar o trabalho. |
+| Perguntamos se a classe Autor com nome e nacionalidade era suficiente ou se precisava de mais atributos | Sim | O grupo concordou que nome e nacionalidade são suficientes para o escopo atual. Se precisar de mais dados (ex.: data de nascimento), é só adicionar depois |
+| Sugeriu adicionar getNomesAutores() como método auxiliar | Sim | O grupo viu utilidade porque evita repetir o loop de impressão em vários pontos do Main |
+| Sugeriu usar Comparable ou ordenar autores por nome | Não | O grupo rejeitou porque não precisamos ordenar autores nesse momento. Seria uma funcionalidade extra que o projeto não precisa agora |
+| Sugeriu criar uma exceção personalizada para estados inválidos | Não | O grupo rejeitou porque exceção personalizada ainda não foi estudado na disciplina. Usamos retornos boolean para sinalizar erro, que é mais simples |
 
 ---
 
-## 5. Alteração/desafio realizado em sala
+## 7. Alteração/desafio realizado em sala
 
 **1. Qual alteração ou desafio o professor solicitou?**
 
-Nossa apresentação foi feita com qualidade. O professor solicitou uma alteração para a próxima entrega: criar **uma classe de autores com vários autores** (um livro pode ter mais de um autor). Vamos implementar essa alteração na próxima entrega.
+N/A
 
 **2. O que o grupo precisou alterar na modelagem ou no código?**
 
-Ainda não alteramos a modelagem nem o código, pois a alteração ficou para a próxima entrega. Para isso, vamos precisar criar a classe Autor, relacioná-la ao Livro (permitindo vários autores por livro) e ajustar a modelagem e o código de acordo.
+N/A
 
 ---
 
-## 6. Checklist antes de enviar
+## 8. Checklist antes de enviar
 
-- [x] O arquivo está nomeado no padrão grupo_X_dominio.zip.
-- [x] A pasta src contém todos os arquivos .java necessários.
-- [x] A pasta modelagem contém a modelagem/UML da solução.
-- [x] A pasta execucao contém uma evidência de que o programa foi executado.
-- [x] O documento_grupo.md está preenchido.
-- [x] O projeto abre/compila com os arquivos entregues.
+- [x] O arquivo está nomeado no padrão grupo_1_biblioteca_etapa2.zip.
+- [x] A pasta src contém todos os arquivos .java necessários (Autor, Livro, Usuario, Emprestimo, Main).
+- [x] A pasta modelagem contém a modelagem/UML atualizada da Etapa 2.
+- [x] A pasta execucao contém evidência de execução do programa atualizado.
+- [x] O documento_grupo.md está preenchido para a Etapa 2.
+- [x] O projeto compila e roda sem erros.
+- [x] A Main cria pelo menos 2 objetos da mesma classe com estados diferentes.
+- [x] Existem pelo menos 2 operações inválidas demonstradas no console.
+- [x] Pelo menos 1 método de negócio protege o estado melhor que um setter genérico.
 - [x] O grupo está preparado para explicar a solução e cada integrante fará sua entrega individual separadamente.
 
 **Importante:** a entrega do ZIP representa o produto coletivo. A compreensão de cada integrante será verificada também pela entrega individual e, quando solicitado, pela apresentação/defesa em sala.

@@ -5,9 +5,16 @@
 // Responsabilidade: guardar os dados do livro e controlar se ele
 // esta disponivel para emprestimo ou se ja esta emprestado.
 //
-// Decisao de modelagem: o atributo "disponivel" pertence a esta
-// classe porque e o proprio livro que sabe se esta livre ou ocupado.
+// Decisao de modelagem:
+// - O atributo "disponivel" pertence a esta classe porque e o
+//   proprio livro que sabe se esta livre ou ocupado.
+// - O atributo "autor" foi substituido por uma lista de autores
+//   (ArrayList<Autor>) porque um livro pode ter mais de um autor.
+//   Cada autor e um objeto da classe Autor, que guarda nome e
+//   nacionalidade.
 // ============================================================
+
+import java.util.ArrayList; // lista dinamica para guardar os autores
 
 public class Livro {
 
@@ -17,20 +24,20 @@ public class Livro {
     // Sao privados (private) para que ninguem de fora da classe
     // possa altera-los diretamente. A alteracao so acontece pelos
     // metodos da classe.
-    private String titulo;      // nome do livro
-    private String autor;       // quem escreveu o livro
-    private String isbn;        // codigo internacional do livro
-    private boolean disponivel; // true = disponivel | false = emprestado
+    private String titulo;          // nome do livro
+    private ArrayList<Autor> autores; // lista de autores do livro
+    private String isbn;            // codigo internacional do livro
+    private boolean disponivel;     // true = disponivel | false = emprestado
 
     // --------------------------------------------------------
     // CONSTRUTOR
     // --------------------------------------------------------
-    // Metodo especial que roda quando criamos um novo livro
-    // (ex.: new Livro(...)). Recebe os dados basicos e define
-    // que todo livro novo entra no acervo disponivel.
-    public Livro(String titulo, String autor, String isbn) {
+    // Metodo especial que roda quando criamos um novo livro.
+    // Recebe a lista de autores como ArrayList<Autor> porque um
+    // livro pode ter mais de um autor.
+    public Livro(String titulo, ArrayList<Autor> autores, String isbn) {
         this.titulo = titulo;
-        this.autor = autor;
+        this.autores = autores;
         this.isbn = isbn;
         this.disponivel = true; // todo livro cadastrado comeca disponivel
     }
@@ -72,8 +79,22 @@ public class Livro {
         return titulo;
     }
 
-    public String getAutor() {
-        return autor;
+    // Retorna a lista completa de autores do livro.
+    public ArrayList<Autor> getAutores() {
+        return autores;
+    }
+
+    // Retorna os nomes de todos os autores separados por virgula.
+    // Util para exibir no console sem precisar percorrer a lista.
+    public String getNomesAutores() {
+        String nomes = "";
+        for (int i = 0; i < autores.size(); i++) {
+            if (i > 0) {
+                nomes += ", ";
+            }
+            nomes += autores.get(i).getNome();
+        }
+        return nomes;
     }
 
     public String getIsbn() {

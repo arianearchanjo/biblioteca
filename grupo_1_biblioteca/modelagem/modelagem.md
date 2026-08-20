@@ -1,19 +1,28 @@
-# Modelagem — Domínio Biblioteca (Grupo 1)
+# Modelagem — Domínio Biblioteca (Grupo 1) — Etapa 2
 
 ## Diagrama de classes (Mermaid)
 
 ```mermaid
 classDiagram
+    class Autor {
+        -String nome
+        -String nacionalidade
+        +Autor(nome, nacionalidade)
+        +getNome() String
+        +getNacionalidade() String
+    }
+
     class Livro {
         -String titulo
-        -String autor
+        -ArrayList~Autor~ autores
         -String isbn
         -boolean disponivel
-        +Livro(titulo, autor, isbn)
+        +Livro(titulo, autores, isbn)
         +emprestar() boolean
         +devolver() boolean
         +getTitulo() String
-        +getAutor() String
+        +getAutores() ArrayList~Autor~
+        +getNomesAutores() String
         +getIsbn() String
         +isDisponivel() boolean
     }
@@ -44,9 +53,12 @@ classDiagram
         +finalizar() void
         +getLivro() Livro
         +getUsuario() Usuario
+        +getDataEmprestimo() String
+        +getDataDevolucaoPrevista() String
         +isAtivo() boolean
     }
 
+    Livro "1" --> "*" Autor : possui
     Emprestimo --> Livro : referencia
     Emprestimo --> Usuario : referencia
 ```
@@ -55,16 +67,30 @@ classDiagram
 
 ```
 +-----------------------------+
-|            Livro            |
+|           Autor             |
 +-----------------------------+
-| - titulo : String           |
-| - autor : String            |
-| - isbn : String             |
-| - disponivel : boolean      |
+| - nome : String             |
+| - nacionalidade : String    |
 +-----------------------------+
-| + emprestar() : boolean     |
-| + devolver() : boolean      |
+| + Autor(nome, nacionalidade)|
+| + getNome() : String        |
+| + getNacionalidade() : String|
 +-----------------------------+
+
++---------------------------------+
+|             Livro               |
++---------------------------------+
+| - titulo : String               |
+| - autores : ArrayList~Autor~    |
+| - isbn : String                 |
+| - disponivel : boolean          |
++---------------------------------+
+| + Livro(titulo, autores, isbn)  |
+| + emprestar() : boolean         |
+| + devolver() : boolean          |
+| + getAutores() : ArrayList~Autor~|
+| + getNomesAutores() : String    |
++---------------------------------+
 
 +-----------------------------+
 |          Usuario            |
@@ -79,29 +105,42 @@ classDiagram
 | + registrarDevolucao() : void     |
 +-----------------------------+
 
-+-----------------------------+
-|         Emprestimo          |
-+-----------------------------+
-| - livro : Livro             |
-| - usuario : Usuario         |
-| - dataEmprestimo : String   |
-| - dataDevolucaoPrevista : String |
-| - ativo : boolean           |
-+-----------------------------+
-| + estaAtrasado() : boolean  |
-| + finalizar() : void        |
-+-----------------------------+
++--------------------------------+
+|         Emprestimo             |
++--------------------------------+
+| - livro : Livro                |
+| - usuario : Usuario            |
+| - dataEmprestimo : String      |
+| - dataDevolucaoPrevista : String|
+| - ativo : boolean              |
++--------------------------------+
+| + estaAtrasado() : boolean     |
+| + finalizar() : void           |
++--------------------------------+
 ```
 
 ## Justificativa das classes
 
 | Classe | Por que existe |
 |---|---|
-| `Livro` | Identidade própria (título/autor/ISBN) e comportamento de ser emprestado ou devolvido. |
+| `Autor` | Representa o autor de um livro. Um livro pode ter mais de um autor, e um autor pode escrever vários livros. Separar autor em classe própria permite representar essa relação. |
+| `Livro` | Identidade própria (título/autores/ISBN) e comportamento de ser emprestado ou devolvido. Agora usa `ArrayList<Autor>` para suportar vários autores. |
 | `Usuario` | Identidade própria (nome/matrícula) e comportamento de controlar seus empréstimos dentro de um limite. |
 | `Emprestimo` | Liga um livro a um usuário em um momento específico, com data prevista de devolução e status ativo/devolvido/atrasado. |
 
+## Mudanças da Etapa 2 em relação à Etapa 1
+
+| O que mudou | Por que mudou |
+|---|---|
+| Criada a classe `Autor` | O professor solicitou suporte a vários autores por livro |
+| `Livro.autor` (String) virou `Livro.autores` (ArrayList\<Autor\>) | Um livro pode ter mais de um autor |
+| Adicionado `getNomesAutores()` no Livro | Método utilitário para exibir os nomes dos autores no console |
+| Atributos permanecem privados (já eram na Etapa 1) | Encapsulamento — ninguém de fora deve alterar estado diretamente |
+| Adicionadas validações no Main | Demonstrar que métodos de negócio protegem o estado melhor que setters |
+
 ## Relacionamentos
 
-- `Emprestimo` **referencia** um `Livro` e um `Usuario` (não é herança: cada classe tem responsabilidades distintas).
-- `Livro` e `Usuario` não dependem de `Emprestimo`: o empréstimo coordena o estado dos dois ao ser criado e finalizado.
+- `Livro` **possui** um ou mais `Autor` (relacionamento 1 para muchos).
+- `Emprestimo` **referencia** um `Livro` e um `Usuario`.
+- `Autor` e `Usuario` não dependem de `Emprestimo`.
+- `Livro` e `Usuario` não dependem de `Emprestimo`.
