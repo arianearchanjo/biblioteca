@@ -4,7 +4,12 @@ Projeto de Programação Orientada a Objetos sobre o domínio **Biblioteca**.
 
 ## Integrantes
 
-Ariane, Caio, Eduardo, Lucas Gabriel, Guilherme e Ryan.
+Ariane Archanjo
+Caio Melo Canhetti
+Eduardo Henrique Vieira
+Guilherme Monteiro Cardoso
+Lucas Gabriel Leite de Sant'Ana
+Ryan Paulino Machado da Cruz
 
 ## O que o projeto faz
 
