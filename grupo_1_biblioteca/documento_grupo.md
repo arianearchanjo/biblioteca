@@ -1,6 +1,6 @@
 # PROGRAMAÇÃO ORIENTADA A OBJETOS
 
-## MODELO DE ENTREGA DO GRUPO — ETAPA 2 (Semanas 19/08 e 26/08)
+## MODELO DE ENTREGA DO GRUPO — ETAPA 2 • SEMANA 21/08
 
 | Campo | Valor |
 |---|---|
@@ -106,11 +106,22 @@ Em vez de setDisponivel(boolean), o Livro oferece emprestar() e devolver(). Esse
 
 **1. Qual alteração ou desafio o professor solicitou?**
 
-N/A
+O professor solicitou a **adição do atributo ano publicado (`anoPublicado`, tipo `int`) na entidade Livro**, para registrar o ano em que cada livro do acervo foi publicado. Seguindo o padrão já praticado na disciplina (como aconteceu com a classe Autor na semana 12/08), a alteração foi **registrada agora e só será efetuada na próxima etapa**.
 
 **2. O que o grupo precisou alterar na modelagem ou no código?**
 
-N/A
+Nesta etapa nada foi alterado no código nem na modelagem: a solicitação ficou registrada para ser implementada na próxima entrega, conforme o padrão. Registro do planejamento feito pelo grupo (o que muda, onde muda e por que muda):
+
+| O que muda | Onde muda |
+|---|---|
+| Novo atributo `private int anoPublicado` | `src/Livro.java` |
+| Construtor passa a receber o ano de publicação (`this.anoPublicado = anoPublicado;`) | `src/Livro.java` |
+| Novo getter `getAnoPublicado()` para consulta | `src/Livro.java` |
+| Criar os livros passando o ano (`new Livro(titulo, autores, isbn, anoPublicado)`) e exibir o ano nos relatórios do console | `src/Main.java` |
+| Adicionar `anoPublicado` na classe Livro do diagrama | `modelagem/` |
+| Atualizar a tabela de atributos da seção 3 | `documento_grupo.md` |
+
+**Por que muda:** o ano de publicação é uma informação natural do domínio Biblioteca, foi solicitado pelo professor (cliente) e o Livro é quem deve conhecer os próprios dados de publicação.
 
 ---
 
@@ -125,6 +136,7 @@ N/A
 - [x] A Main cria pelo menos 2 objetos da mesma classe com estados diferentes.
 - [x] Existem pelo menos 2 operações inválidas demonstradas no console.
 - [x] Pelo menos 1 método de negócio protege o estado melhor que um setter genérico.
+- [x] A alteração solicitada em sala (ano publicado no Livro) está registrada no documento para ser aplicada na próxima etapa.
 - [x] O grupo está preparado para explicar a solução e cada integrante fará sua entrega individual separadamente.
 
 **Importante:** a entrega do ZIP representa o produto coletivo. A compreensão de cada integrante será verificada também pela entrega individual e, quando solicitado, pela apresentação/defesa em sala.
