@@ -1,13 +1,13 @@
 # PROGRAMAÇÃO ORIENTADA A OBJETOS
 
-## MODELO DE ENTREGA DO GRUPO — ETAPA 2 • SEMANA 21/08
+## MODELO DE ENTREGA DO GRUPO — ETAPA 3 • SEMANA 02/09
 
 | Campo | Valor |
 |---|---|
 | **Grupo** | 1 |
 | **Domínio** | Biblioteca |
 | **Integrantes** | Ariane, Caio, Eduardo, Lucas Gabriel, Guilherme, Ryan |
-| **Nome do arquivo ZIP** | grupo_1_biblioteca_etapa2.zip |
+| **Nome do arquivo ZIP** | grupo_1_biblioteca_etapa3.zip |
 
 **Entrega no AVA:** o grupo deverá enviar UM único arquivo .zip contendo o programa Java, a modelagem atualizada, evidência de execução e este documento preenchido.
 
@@ -15,18 +15,20 @@
 
 ## 1. Estrutura obrigatória do arquivo ZIP
 
-**Exemplo:** grupo_1_biblioteca_etapa2.zip
+**Exemplo:** grupo_1_biblioteca_etapa3.zip
 
 ```
-grupo_1_biblioteca_etapa2/
+grupo_1_biblioteca_etapa3/
 ├── src/
+│   ├── ItemBiblioteca.java
 │   ├── Autor.java
 │   ├── Livro.java
+│   ├── Revista.java
 │   ├── Usuario.java
 │   ├── Emprestimo.java
 │   └── Main.java
 ├── modelagem/
-│   └── modelagem_etapa2.png (ou .pdf/.md)
+│   └── modelagem_etapa3.md (ou .png/.pdf)
 ├── execucao/
 │   └── saida_console.txt
 └── documento_grupo.docx
@@ -34,109 +36,140 @@ grupo_1_biblioteca_etapa2/
 
 ---
 
-## 2. O que deve existir no programa Java
+## 2. Hierarquia escolhida e justificativa "é um"
 
-- Pelo menos 3 classes de domínio (Autor, Livro, Usuario, Emprestimo = 4 classes).
-- Atributos privados com encapsulamento.
-- Construtores explícitos em todas as classes de domínio.
-- Getters necessários para consulta.
-- Pelo menos 1 método de negócio real por classe (não contar getters/setters).
-- Pelo menos 2 validações de estado no código.
-- Uma classe Main que crie pelo menos dois objetos da mesma classe com estados diferentes.
-- Execução no console demonstrando estado, comportamento e validações.
-- Não utilizar herança, interfaces ou recursos ainda não estudados.
+**Hierarquia:** `ItemBiblioteca` é a superclasse; `Livro` e `Revista` são as subclasses.
 
----
+**Justificativa:** tanto livro quanto revista são itens que a biblioteca empresta: têm título, ficam disponíveis ou emprestados e passam pelos mesmos processos (emprestar/devolver). A frase "Livro é um ItemBiblioteca" e "Revista é um ItemBiblioteca" faz sentido, então a herança representa uma generalização coerente do domínio — e não apenas reaproveitamento de um atributo com o mesmo nome.
 
-## 3. Resumo da modelagem do grupo (Etapa 2)
+### Atividade 1 — "É UM" x "TEM UM" (6 relações)
 
-| Classe | Responsabilidade | Principais atributos | Principais métodos |
-|---|---|---|---|
-| Autor | Representa o autor de um livro (nome e nacionalidade) | nome, nacionalidade | getNome(), getNacionalidade() |
-| Livro | Representa um livro do acervo, controla disponibilidade e guarda seus autores | titulo, autores (ArrayList\<Autor\>), isbn, disponivel | emprestar(), devolver(), getNomesAutores() |
-| Usuario | Representa um usuário da biblioteca e controla seus empréstimos ativos dentro de um limite pessoal | nome, matricula, qtdEmprestimosAtivos, limiteEmprestimos | podeEmprestar(), registrarEmprestimo(), registrarDevolucao() |
-| Emprestimo | Liga um livro a um usuário e controla o prazo e o status da devolução (ativo/devolvido/atrasado) | livro, usuario, dataEmprestimo, dataDevolucaoPrevista, ativo | estaAtrasado(), finalizar() |
-| Main | Demonstra a modelagem criando objetos, executando operações válidas e inválidas, e imprimindo um relatório no console | (nenhum atributo próprio) | main() |
+| Relação | É UM (herança)? | TEM UM / outra relação? |
+|---|---|---|
+| Livro é um ItemBiblioteca | [x] | [ ] |
+| Revista é um ItemBiblioteca | [x] | [ ] |
+| Livro tem um/mais autores | [ ] | [x] (composição, 1 para muitos) |
+| Emprestimo envolve um Livro | [ ] | [x] (referência) |
+| Emprestimo envolve um Usuario | [ ] | [x] (referência) |
+| Usuario tem um limite de empréstimos | [ ] | [x] (atributo, não-herança) |
+
+**Justificativa de duas delas:**
+- *Livro é um ItemBiblioteca:* compartilha título, disponibilidade e os métodos emprestar/devolver — comportamento comum a qualquer item emprestável.
+- *Livro tem um autor:* um autor não "é um" livro; a relação é de pertencimento (1 para muitos). Por isso usamos `ArrayList<Autor>` dentro de `Livro` (composição), e não herança.
 
 ---
 
-## 4. Mudanças da Etapa 2 em relação à Etapa 1
+## 3. O que foi movido para a superclasse e o que ficou nas subclasses
+
+| Atributo/método | Onde ficou | Por quê |
+|---|---|---|
+| `titulo`, `disponivel` | `ItemBiblioteca` | Comuns a todos os itens. |
+| `emprestar()`, `devolver()` | `ItemBiblioteca` | Comportamento comum a todos os itens. |
+| `autores`, `isbn`, `anoPublicado` | `Livro` | Específicos de livro; revista não tem. |
+| `editora`, `edicao` | `Revista` | Específicos de revista; livro não tem. |
+
+---
+
+## 4. Exemplo de sobrecarga
+
+No `ItemBiblioteca` existem dois métodos com o mesmo nome `exibirResumo`, mas assinaturas diferentes:
+
+```java
+public void exibirResumo() { ... }              // sem parâmetro
+public void exibirResumo(boolean detalhado) { ... } // com parâmetro
+```
+
+O parâmetro `detalhado` controla o quanto mostramos. Ao chamar `item.exibirResumo(true)` e `item.exibirResumo(false)` no Main, o Java escolhe a versão certa pela assinatura.
+
+---
+
+## 5. Exemplo de sobrescrita e polimorfismo
+
+O método `exibirResumo()` é sobrescrito (`@Override`) em `Livro` (mostra o ano) e em `Revista` (mostra a edição). No Main criamos referências da superclasse apontando para objetos das subclasses e chamamos o mesmo método:
+
+```java
+ItemBiblioteca item1 = new Livro("Dom Casmurro", autores, "9788535910663", 1899);
+ItemBiblioteca item2 = new Revista("Superinteressante", "Abril", 250);
+item1.exibirResumo(); // Livro: Dom Casmurro | Ano: 1899
+item2.exibirResumo(); // Revista: Superinteressante | Edicao: 250
+```
+
+Saída real no console:
+
+```
+-- POLIMORFISMO --
+Livro: Dom Casmurro | Ano: 1899
+Revista: Superinteressante | Edicao: 250
+```
+
+---
+
+## 6. Alteração surpresa realizada (Atividade 7)
+
+**Qual classe deve mudar:** `Livro`.
+
+**A mudança pertence à superclasse ou somente a uma subclasse?** Somente à subclasse `Livro` — o ano de publicação é um dado específico de livro, não de qualquer item.
+
+**Impacto em construtores ou métodos:** o construtor de `Livro` passou a receber o `int anoPublicado`, foi adicionado o getter `getAnoPublicado()` e a criação dos livros no Main foi ajustada.
+
+**Como evitar duplicação desnecessária:** não duplicamos código — `titulo` e `disponivel` continuam na superclasse; apenas o que é específico do livro (incluindo `anoPublicado`) ficou na subclasse.
+
+```java
+public Livro(String titulo, ArrayList<Autor> autores, String isbn, int anoPublicado) {
+    super(titulo);
+    this.autores = autores;
+    this.isbn = isbn;
+    this.anoPublicado = anoPublicado;
+}
+```
+
+---
+
+## 7. O que mudou em relação à Etapa 2
 
 | O que mudou | Por que mudou |
 |---|---|
-| Criada a classe **Autor** (nome + nacionalidade) | O professor solicitou suporte a vários autores por livro na Etapa 1 |
-| `Livro.autor` (String) virou `Livro.autores` (ArrayList\<Autor\>) | Um livro pode ter mais de um autor |
-| Adicionado `getNomesAutores()` no Livro | Método utilitário para exibir nomes dos autores no console |
-| Adicionada classe Autor no Main com 3 objetos (Machado, Exupery, Coelho) | Demonstrar a nova classe e a relação 1 para muitos com Livro |
-| Adicionadas 2 tentativas inválidas no Main (limite atingido + livro já emprestado) | Atividade 8: testar validações de estado inválido |
-| Adicionado teste de proteção por método de negócio (devolver() em livro disponível) | Atividade 8: mostrar que emprestar()/devolver() protegem melhor que um setter |
+| Criada a superclasse `ItemBiblioteca` | Generalização "é um" para livro e revista |
+| Criada a subclasse `Revista` | Segundo tipo de item para demonstrar herança e polimorfismo |
+| `Livro` passou a usar `extends ItemBiblioteca` | Herda título/disponibilidade em vez de repetir |
+| Adicionado `super(titulo)` nos construtores | Repassar o título à superclasse |
+| Adicionado `anoPublicado` (int) no Livro | Alteração surpresa pedida pelo professor |
+| Adicionado `exibirResumo()` com `@Override` | Sobrescrita e polimorfismo |
+| Adicionado `exibirResumo(boolean)` | Sobrecarga de método |
 
 ---
 
-## 5. Decisões de modelagem
+## 8. Herança simples e múltipla em Java (Atividade 3)
 
-**1. Por que a classe Autor foi criada?**
+**Herança simples:** uma classe herda de uma única superclasse direta. Em Java todo objeto herda, no fim das contas, de `Object`.
 
-Na Etapa 1, o autor era uma String dentro de Livro. O professor solicitou que um livro pudesse ter mais de um autor. Para isso, criamos a classe Autor como entidade própria, com nome e nacionalidade, e substituímos a String por um ArrayList\<Autor\> dentro de Livro. Isso permite representar a relação de vários autores por livro de forma limpa.
+**Herança múltipla:** seria uma classe herdar de duas ou mais superclasses ao mesmo tempo.
 
-**2. Por que os atributos continuam privados?**
-
-Todos os atributos de Autor, Livro, Usuario e Emprestimo são private. Isso protege o estado interno: ninguém de fora pode alterar diretamente um atributo (ex.: marcar um livro como disponível sem passar pelo método devolver()). Os getters permitem consulta, e os métodos de negócio (emprestar(), devolver(), registrarEmprestimo(), etc.) controlam as mudanças de estado.
-
-**3. Por que não criamos um setter para disponivel no Livro?**
-
-Em vez de setDisponivel(boolean), o Livro oferece emprestar() e devolver(). Esses métodos verificam o estado atual antes de alterar: emprestar() só funciona se o livro estiver disponível, e devolver() só funciona se estiver emprestado. Isso é mais seguro que um setter genérico, que permitiria colocar o livro em qualquer estado sem validação.
+**Por que `class ClasseC extends ClasseA, ClasseB` NÃO compila em Java:** Java não permite colocar mais de uma classe no `extends`, por isso esse código é inválido. O Java resolve esse tipo de necessidade com interfaces, que serão estudadas depois nesta disciplina.
 
 ---
 
-## 6. Uso da IA pelo grupo
+## 9. Uso da IA pelo grupo
 
-**Como usamos a IA:** o grupo primeiro discutiu e definiu a modelagem (classe Autor, substituir String por lista de autores). Depois consultamos a IA para revisar o código e validar se estava tudo correto. Cada sugestão da IA foi analisada pelo grupo antes de aceitar ou rejeitar.
+> **A preencher pelo grupo.** A sugestão da IA deve ser registrada na tabela e a decisão (aceitar/rejeitar) deve ser tomada pelo grupo com justificativa técnica.
 
 | Sugestão/pergunta feita à IA | Aceitamos? | Justificativa do grupo |
 |---|---|---|
-| Perguntamos se a classe Autor com nome e nacionalidade era suficiente ou se precisava de mais atributos | Sim | O grupo concordou que nome e nacionalidade são suficientes para o escopo atual. Se precisar de mais dados (ex.: data de nascimento), é só adicionar depois |
-| Sugeriu adicionar getNomesAutores() como método auxiliar | Sim | O grupo viu utilidade porque evita repetir o loop de impressão em vários pontos do Main |
-| Sugeriu usar Comparable ou ordenar autores por nome | Não | O grupo rejeitou porque não precisamos ordenar autores nesse momento. Seria uma funcionalidade extra que o projeto não precisa agora |
-| Sugeriu criar uma exceção personalizada para estados inválidos | Não | O grupo rejeitou porque exceção personalizada ainda não foi estudado na disciplina. Usamos retornos boolean para sinalizar erro, que é mais simples |
+|  |  |  |
 
 ---
 
-## 7. Alteração/desafio realizado em sala
+## 10. Checklist antes de enviar (Etapa 3)
 
-**1. Qual alteração ou desafio o professor solicitou?**
-
-O professor solicitou a **adição do atributo ano publicado (`anoPublicado`, tipo `int`) na entidade Livro**, para registrar o ano em que cada livro do acervo foi publicado. Seguindo o padrão já praticado na disciplina (como aconteceu com a classe Autor na semana 12/08), a alteração foi **registrada agora e só será efetuada na próxima etapa**.
-
-**2. O que o grupo precisou alterar na modelagem ou no código?**
-
-Nesta etapa nada foi alterado no código nem na modelagem: a solicitação ficou registrada para ser implementada na próxima entrega, conforme o padrão. Registro do planejamento feito pelo grupo (o que muda, onde muda e por que muda):
-
-| O que muda | Onde muda |
-|---|---|
-| Novo atributo `private int anoPublicado` | `src/Livro.java` |
-| Construtor passa a receber o ano de publicação (`this.anoPublicado = anoPublicado;`) | `src/Livro.java` |
-| Novo getter `getAnoPublicado()` para consulta | `src/Livro.java` |
-| Criar os livros passando o ano (`new Livro(titulo, autores, isbn, anoPublicado)`) e exibir o ano nos relatórios do console | `src/Main.java` |
-| Adicionar `anoPublicado` na classe Livro do diagrama | `modelagem/` |
-| Atualizar a tabela de atributos da seção 3 | `documento_grupo.md` |
-
-**Por que muda:** o ano de publicação é uma informação natural do domínio Biblioteca, foi solicitado pelo professor (cliente) e o Livro é quem deve conhecer os próprios dados de publicação.
-
----
-
-## 8. Checklist antes de enviar
-
-- [x] O arquivo está nomeado no padrão grupo_1_biblioteca_etapa2.zip.
-- [x] A pasta src contém todos os arquivos .java necessários (Autor, Livro, Usuario, Emprestimo, Main).
-- [x] A pasta modelagem contém a modelagem/UML atualizada da Etapa 2.
-- [x] A pasta execucao contém evidência de execução do programa atualizado.
-- [x] O documento_grupo.md está preenchido para a Etapa 2.
-- [x] O projeto compila e roda sem erros.
-- [x] A Main cria pelo menos 2 objetos da mesma classe com estados diferentes.
-- [x] Existem pelo menos 2 operações inválidas demonstradas no console.
-- [x] Pelo menos 1 método de negócio protege o estado melhor que um setter genérico.
-- [x] A alteração solicitada em sala (ano publicado no Livro) está registrada no documento para ser aplicada na próxima etapa.
-- [x] O grupo está preparado para explicar a solução e cada integrante fará sua entrega individual separadamente.
-
-**Importante:** a entrega do ZIP representa o produto coletivo. A compreensão de cada integrante será verificada também pela entrega individual e, quando solicitado, pela apresentação/defesa em sala.
+- [ ] Continuamos o projeto da Etapa 2.
+- [ ] Criamos uma hierarquia coerente e justificamos a relação "é um".
+- [ ] O Java Console compila e executa.
+- [ ] Temos superclasse e pelo menos duas subclasses.
+- [ ] Usamos `extends` e `super(...)` corretamente.
+- [ ] Há pelo menos um exemplo de sobrecarga.
+- [ ] Há pelo menos um exemplo de sobrescrita com `@Override`.
+- [ ] Demonstramos polimorfismo no Main.
+- [ ] Registramos uma análise crítica de sugestão da IA.
+- [ ] Atualizamos modelagem, evidência de execução e documento do grupo.
+- [ ] Adicionamos o atributo `anoPublicado` (int) ao Livro (alteração surpresa).
+- [ ] Cada integrante preparou sua entrega individual e consegue defender o trabalho.
