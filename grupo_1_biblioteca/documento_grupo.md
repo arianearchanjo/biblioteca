@@ -125,7 +125,22 @@ public Livro(String titulo, ArrayList<Autor> autores, String isbn, int anoPublic
 
 ---
 
-## 7. O que mudou em relação à Etapa 2
+## 7. Alteração solicitada pelo professor para Etapa 4
+
+O professor comunicou que, na Etapa 4, será necessário adicionar o atributo **categoria** (String) à classe `Livro`. Essa alteração foi solicitada durante a Etapa 3, mas sua implementação ficará para a próxima etapa, quando o foco será encapsulamento e outras orientações.
+
+**Classe afetada:** `Livro`  
+**Tipo de alteração:** Adição de atributo (String categoria)  
+**Impacto esperado:**  
+- Inclusão do atributo `private String categoria;` na classe `Livro`  
+- Atualização do construtor para receber o parâmetro `categoria`  
+- Criação do getter `getCategoria()`  
+- Ajuste dos objetos `Livro` no `Main` para incluir o novo atributo  
+- Atualização do método `exibirResumo()` para mostrar a categoria  
+
+---
+
+## 8. O que mudou em relação à Etapa 2
 
 | O que mudou | Por que mudou |
 |---|---|
@@ -139,7 +154,7 @@ public Livro(String titulo, ArrayList<Autor> autores, String isbn, int anoPublic
 
 ---
 
-## 8. Herança simples e múltipla em Java (Atividade 3)
+## 9. Herança simples e múltipla em Java (Atividade 3)
 
 **Herança simples:** uma classe herda de uma única superclasse direta. Em Java todo objeto herda, no fim das contas, de `Object`.
 
@@ -149,17 +164,19 @@ public Livro(String titulo, ArrayList<Autor> autores, String isbn, int anoPublic
 
 ---
 
-## 9. Uso da IA pelo grupo
-
-> **A preencher pelo grupo.** A sugestão da IA deve ser registrada na tabela e a decisão (aceitar/rejeitar) deve ser tomada pelo grupo com justificativa técnica.
+## 10. Uso da IA pelo grupo
 
 | Sugestão/pergunta feita à IA | Aceitamos? | Justificativa do grupo |
 |---|---|---|
-|  |  |  |
+| Mover `emprestar()`/`devolver()` para a superclasse `ItemBiblioteca`, já que livros e revistas são emprestados do mesmo jeito. | Sim | Elimina duplicação entre Livro e Revista e deixa a regra de empréstimo num único lugar. Comparamos com o fluxo da Etapa 2 e confirmamos que o comportamento era idêntico. |
+| Questionar se a hierarquia usava herança apenas para reaproveitar código (verificar se era um verdadeiro "é um"). | Sim, com restrição | A análise confirmou que Livro→ItemBiblioteca e Revista→ItemBiblioteca são generalizações reais do domínio. Rejeitamos a parte que sugeria tirar `titulo` da superclasse: o título é inerente a todo item e pertence à base. |
+| Manter na superclasse apenas o que é comum; deixar específicos (autores/ISBN/ano no Livro; editora/edição na Revista) nas subclasses. | Sim | Evita poluir a superclasse com dados que nem todo item tem. Reforça a divisão "é um"/"tem um" da modelagem. |
+| Deixar o `exibirResumo(boolean)` apenas na superclasse como sobrecarga, sem sobrescrever nas subclasses. | Sim | Mantém o exemplo de sobrecarga simples e ainda cumpre a atividade. Preferimos simplicidade, conforme nossa regra de código. |
+| Testar uma revista emprestada para validar que a herança preserva a regra de disponibilidade. | Sim | Geramos um caso de teste adicional e confirmamos no console que a disponibilidade alterna corretamente via método herdado. |
 
 ---
 
-## 10. Checklist antes de enviar (Etapa 3)
+## 11. Checklist antes de enviar (Etapa 3)
 
 - [ ] Continuamos o projeto da Etapa 2.
 - [ ] Criamos uma hierarquia coerente e justificamos a relação "é um".
