@@ -1,18 +1,23 @@
 // ============================================================
-// CLASSE ITEMBIBLIOTECA (SUPERCLASSE)
+// CLASSE ABSTRATA ITEMBIBLIOTECA
 // ============================================================
-// Classe que representa um item generico da biblioteca, algo que
-// pode ser emprestado (livro ou revista).
+// Classe abstrata que representa um item generico da biblioteca
+// (algo que pode ser emprestado: livro ou revista).
 //
 // Decisao de modelagem:
-// - "Um Livro E UM ItemBiblioteca" e "Uma Revista E UM
-//   ItemBiblioteca". Por isso Livro e Revista herdam (extends)
-//   de ItemBiblioteca.
-// - O que e comum a todos os itens fica aqui: titulo, disponivel,
-//   emprestar() e devolver().
+// - ItemBiblioteca e ABSTRATA porque nao faz sentido instanciar
+//   um "item generico": todo item da biblioteca e, concretamente,
+//   um Livro ou uma Revista. Nao existe um item sem tipo.
+// - O metodo exibirResumo() e abstrato: cada tipo de item exibe
+//   seu resumo de forma diferente (livro mostra o ano, revista
+//   mostra a edicao), entao nao ha uma implementacao padrao valida
+//   para a superclasse.
+// - ItemBiblioteca implementa a interface Emprestavel, fornecendo
+//   a implementacao concreta de emprestar(), devolver() e
+//   isDisponivel(), herdada por Livro e Revista.
 // ============================================================
 
-public class ItemBiblioteca {
+public abstract class ItemBiblioteca implements Emprestavel {
 
     // --------------------------------------------------------
     // ATRIBUTOS COMUNS
@@ -28,42 +33,44 @@ public class ItemBiblioteca {
         this.disponivel = true; // todo item comeca disponivel
     }
 
-    // --------------------------------------------------------
-    // METODOS DE COMPORTAMENTO COMUNS
-    // --------------------------------------------------------
+// --------------------------------------------------------
+// IMPLEMENTACAO DA INTERFACE Emprestavel
+// --------------------------------------------------------
 
-    public boolean emprestar() {
-        if (disponivel) {
-            disponivel = false;
-            return true;
+    // Empresta o item. Se ja estiver emprestado, lanca excecao
+    // para nao permitir a operacao invalida.
+    @Override
+    public void emprestar() throws ItemIndisponivelException {
+        if (!disponivel) {
+            throw new ItemIndisponivelException("O item '" + titulo + "' nao esta disponivel para emprestimo.");
         }
-        return false;
+        disponivel = false;
     }
 
-    public boolean devolver() {
+    // Devolve o item ao acervo (marca como disponivel novamente).
+    @Override
+    public void devolver() {
         if (!disponivel) {
             disponivel = true;
-            return true;
         }
-        return false;
+    }
+
+    @Override
+    public boolean isDisponivel() {
+        return disponivel;
     }
 
     // --------------------------------------------------------
-    // METODO COMUM (SOBRESCRITO NAS SUBCLASSES)
+    // METODO ABSTRATO (implementado pelas subclasses)
     // --------------------------------------------------------
-    // Exibe uma linha resumida do item. Nas subclasses esse metodo
-    // sera SOBRESCRITO (@Override) para mostrar o dado especifico.
-    // Isso permite o polimorfismo no Main.
-    public void exibirResumo() {
-        System.out.println("Item: " + titulo);
-    }
+    // Cada subclasse sabe exibir seu próprio resumo com o dado
+    // especifico dela (ano para Livro, edicao para Revista).
+    public abstract void exibirResumo();
 
-    // SOBRECARGA (overload): mesmo nome exibirResumo, mas agora
-    // recebendo um parametro boolean. E a mesma operacao com outra
-    // assinatura. O parametro "detalhado" controla quanto mostramos.
+    // SOBRECARGA: mesmo nome com parametro boolean detalhado.
     public void exibirResumo(boolean detalhado) {
         if (detalhado) {
-            System.out.println("Item detalhado: " + titulo + " | Disponivel? " + disponivel);
+            System.out.println("Item: " + titulo + " | Disponivel? " + disponivel);
         } else {
             System.out.println("Item: " + titulo);
         }
@@ -75,9 +82,5 @@ public class ItemBiblioteca {
 
     public String getTitulo() {
         return titulo;
-    }
-
-    public boolean isDisponivel() {
-        return disponivel;
     }
 }

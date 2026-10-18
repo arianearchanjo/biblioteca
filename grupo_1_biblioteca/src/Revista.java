@@ -11,7 +11,7 @@
 //   emprestada. Por isso usa extends.
 // ============================================================
 
-public class Revista extends ItemBiblioteca {
+public class Revista extends ItemBiblioteca implements Emprestavel {
 
     // --------------------------------------------------------
     // ATRIBUTOS ESPECIFICOS DA REVISTA
@@ -20,7 +20,10 @@ public class Revista extends ItemBiblioteca {
     private int edicao;     // numero da edicao da revista
 
     // --------------------------------------------------------
-    // CONSTRUTOR
+    // CONSTRUTOR4
+
+
+    
     // --------------------------------------------------------
     // super(titulo) repassa o titulo para a superclasse, pois o
     // atributo titulo pertence a ItemBiblioteca.

@@ -13,7 +13,7 @@
 
 import java.util.ArrayList; // lista para guardar os autores
 
-public class Livro extends ItemBiblioteca {
+public class Livro extends ItemBiblioteca implements Emprestavel {
 
     // --------------------------------------------------------
     // ATRIBUTOS ESPECIFICOS DO LIVRO
@@ -21,17 +21,19 @@ public class Livro extends ItemBiblioteca {
     private ArrayList<Autor> autores; // lista de autores do livro
     private String isbn;              // codigo internacional do livro
     private int anoPublicado;         // ano em que o livro foi publicado
+    private String categoria;         // categoria do livro (ex.: romance, ficcao, tecnico)
 
     // --------------------------------------------------------
     // CONSTRUTOR
     // --------------------------------------------------------
     // super(titulo) repassa o titulo para a superclasse, pois o
     // atributo titulo pertence a ItemBiblioteca.
-    public Livro(String titulo, ArrayList<Autor> autores, String isbn, int anoPublicado) {
+    public Livro(String titulo, ArrayList<Autor> autores, String isbn, int anoPublicado, String categoria) {
         super(titulo);
         this.autores = autores;
         this.isbn = isbn;
         this.anoPublicado = anoPublicado;
+        this.categoria = categoria;
     }
 
     // --------------------------------------------------------
@@ -67,5 +69,9 @@ public class Livro extends ItemBiblioteca {
 
     public int getAnoPublicado() {
         return anoPublicado;
+    }
+
+    public String getCategoria() {
+        return categoria;
     }
 }

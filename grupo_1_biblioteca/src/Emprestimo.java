@@ -10,7 +10,7 @@
 // para um usuario em uma determinada data).
 // ============================================================
 
-import java.time.LocalDate; // classe pronta do Java que representa a data de hoje
+import java.time.LocalDate; // classe pronta do Java que representa uma data
 
 public class Emprestimo {
 
@@ -19,20 +19,15 @@ public class Emprestimo {
     // --------------------------------------------------------
     private Livro livro;                  // qual livro foi emprestado
     private Usuario usuario;              // quem pegou o livro
-    private String dataEmprestimo;        // dia em que o livro saiu da biblioteca
-    private String dataDevolucaoPrevista; // dia em que o livro deve voltar
+    private LocalDate dataEmprestimo;     // dia em que o livro saiu da biblioteca
+    private LocalDate dataDevolucaoPrevista; // dia em que o livro deve voltar
     private boolean ativo;                // true = emprestimo em andamento
 
     // --------------------------------------------------------
     // CONSTRUTOR
     // --------------------------------------------------------
     // Cria um novo emprestimo. Todo emprestimo comeca ativo.
-    //
-    // Observacao sobre as datas: guardamos as datas como texto no
-    // formato aaaa-mm-dd. Nesse formato, comparar dois textos com o
-    // metodo compareTo() compara as datas na ordem cronologica certa,
-    // sem precisar de bibliotecas complicadas de data.
-    public Emprestimo(Livro livro, Usuario usuario, String dataEmprestimo, String dataDevolucaoPrevista) {
+    public Emprestimo(Livro livro, Usuario usuario, LocalDate dataEmprestimo, LocalDate dataDevolucaoPrevista) {
         this.livro = livro;
         this.usuario = usuario;
         this.dataEmprestimo = dataEmprestimo;
@@ -47,14 +42,14 @@ public class Emprestimo {
     // Verifica se o emprestimo esta atrasado.
     // Um emprestimo so pode estar atrasado se ainda estiver ativo
     // (um emprestimo ja devolvido nunca esta atrasado).
-    // Se a data de hoje for "maior" que a data prevista de devolucao,
+    // Se a data de hoje for posterior à data prevista de devolucao,
     // significa que o prazo ja passou, ou seja, esta atrasado.
     public boolean estaAtrasado() {
         if (!ativo) {
             return false; // emprestimo ja devolvido nunca esta atrasado
         }
-        String hoje = LocalDate.now().toString(); // pega a data de hoje como texto
-        return hoje.compareTo(dataDevolucaoPrevista) > 0;
+        LocalDate hoje = LocalDate.now(); // pega a data de hoje
+        return hoje.isAfter(dataDevolucaoPrevista);
     }
 
     // Encerra o emprestimo (devolucao do livro).
@@ -81,11 +76,11 @@ public class Emprestimo {
         return usuario;
     }
 
-    public String getDataEmprestimo() {
+    public LocalDate getDataEmprestimo() {
         return dataEmprestimo;
     }
 
-    public String getDataDevolucaoPrevista() {
+    public LocalDate getDataDevolucaoPrevista() {
         return dataDevolucaoPrevista;
     }
 
