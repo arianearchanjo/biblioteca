@@ -17,28 +17,38 @@
 //   isDisponivel(), herdada por Livro e Revista.
 // ============================================================
 
+package model;
+
+import exception.ItemIndisponivelException;
+
 public abstract class ItemBiblioteca implements Emprestavel {
 
-    // --------------------------------------------------------
-    // ATRIBUTOS COMUNS
-    // --------------------------------------------------------
-    private String titulo;       // nome do item (livro ou revista)
-    private boolean disponivel;  // true = disponivel | false = emprestado
+    private String titulo;
+    private boolean disponivel;
 
-    // --------------------------------------------------------
-    // CONSTRUTOR
-    // --------------------------------------------------------
     public ItemBiblioteca(String titulo) {
-        this.titulo = titulo;
-        this.disponivel = true; // todo item comeca disponivel
+        setTitulo(titulo);
+        this.disponivel = true;
     }
 
-// --------------------------------------------------------
-// IMPLEMENTACAO DA INTERFACE Emprestavel
-// --------------------------------------------------------
+    // GETTERS
+    public String getTitulo() {
+        return titulo;
+    }
 
-    // Empresta o item. Se ja estiver emprestado, lanca excecao
-    // para nao permitir a operacao invalida.
+    public boolean isDisponivel() {
+        return disponivel;
+    }
+
+    // SETTERS COM VALIDACAO
+    public void setTitulo(String titulo) {
+        if (titulo == null || titulo.trim().isEmpty()) {
+            throw new IllegalArgumentException("Titulo do item nao pode ser nulo ou vazio.");
+        }
+        this.titulo = titulo.trim();
+    }
+
+    // IMPLEMENTACAO DA INTERFACE EMPRESTAVEL
     @Override
     public void emprestar() throws ItemIndisponivelException {
         if (!disponivel) {
@@ -47,7 +57,6 @@ public abstract class ItemBiblioteca implements Emprestavel {
         disponivel = false;
     }
 
-    // Devolve o item ao acervo (marca como disponivel novamente).
     @Override
     public void devolver() {
         if (!disponivel) {
@@ -55,19 +64,10 @@ public abstract class ItemBiblioteca implements Emprestavel {
         }
     }
 
-    @Override
-    public boolean isDisponivel() {
-        return disponivel;
-    }
-
-    // --------------------------------------------------------
     // METODO ABSTRATO (implementado pelas subclasses)
-    // --------------------------------------------------------
-    // Cada subclasse sabe exibir seu próprio resumo com o dado
-    // especifico dela (ano para Livro, edicao para Revista).
     public abstract void exibirResumo();
 
-    // SOBRECARGA: mesmo nome com parametro boolean detalhado.
+    // SOBRECARGA: mesmo nome com parametro boolean detalhado
     public void exibirResumo(boolean detalhado) {
         if (detalhado) {
             System.out.println("Item: " + titulo + " | Disponivel? " + disponivel);
@@ -76,11 +76,8 @@ public abstract class ItemBiblioteca implements Emprestavel {
         }
     }
 
-    // --------------------------------------------------------
-    // METODOS GETTERS
-    // --------------------------------------------------------
-
-    public String getTitulo() {
-        return titulo;
+    @Override
+    public String toString() {
+        return titulo + " | Disponivel: " + (disponivel ? "Sim" : "Nao");
     }
 }
